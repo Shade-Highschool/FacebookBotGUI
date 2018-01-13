@@ -44,11 +44,10 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblId = new System.Windows.Forms.Label();
-            this.txtId = new System.Windows.Forms.TextBox();
             this.lblMessage = new System.Windows.Forms.Label();
             this.txtMessage = new System.Windows.Forms.TextBox();
-            this.lblSelectedUser = new System.Windows.Forms.Label();
+            this.lblProfile = new System.Windows.Forms.Label();
+            this.listBoxProfiles = new System.Windows.Forms.ListBox();
             this.loginPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +58,7 @@
             this.listBoxUsers.FormattingEnabled = true;
             this.listBoxUsers.Location = new System.Drawing.Point(748, 0);
             this.listBoxUsers.Name = "listBoxUsers";
+            this.listBoxUsers.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxUsers.Size = new System.Drawing.Size(265, 474);
             this.listBoxUsers.TabIndex = 0;
             this.listBoxUsers.SelectedIndexChanged += new System.EventHandler(this.listBoxUsers_SelectedIndexChanged);
@@ -197,7 +197,7 @@
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(211, 68);
+            this.btnSend.Location = new System.Drawing.Point(209, 130);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(92, 36);
             this.btnSend.TabIndex = 8;
@@ -207,37 +207,20 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.lblSelectedUser);
+            this.panel1.Controls.Add(this.listBoxProfiles);
             this.panel1.Controls.Add(this.lblMessage);
             this.panel1.Controls.Add(this.btnSend);
             this.panel1.Controls.Add(this.txtMessage);
-            this.panel1.Controls.Add(this.lblId);
-            this.panel1.Controls.Add(this.txtId);
+            this.panel1.Controls.Add(this.lblProfile);
             this.panel1.Location = new System.Drawing.Point(0, 134);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(317, 223);
+            this.panel1.Size = new System.Drawing.Size(317, 282);
             this.panel1.TabIndex = 9;
-            // 
-            // lblId
-            // 
-            this.lblId.AutoSize = true;
-            this.lblId.Location = new System.Drawing.Point(17, 12);
-            this.lblId.Name = "lblId";
-            this.lblId.Size = new System.Drawing.Size(48, 13);
-            this.lblId.TabIndex = 3;
-            this.lblId.Text = "Profile Id";
-            // 
-            // txtId
-            // 
-            this.txtId.Location = new System.Drawing.Point(13, 29);
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(100, 20);
-            this.txtId.TabIndex = 2;
             // 
             // lblMessage
             // 
             this.lblMessage.AutoSize = true;
-            this.lblMessage.Location = new System.Drawing.Point(17, 93);
+            this.lblMessage.Location = new System.Drawing.Point(15, 155);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(50, 13);
             this.lblMessage.TabIndex = 5;
@@ -245,20 +228,28 @@
             // 
             // txtMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(13, 110);
+            this.txtMessage.Location = new System.Drawing.Point(11, 172);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(290, 101);
             this.txtMessage.TabIndex = 4;
             // 
-            // lblSelectedUser
+            // lblProfile
             // 
-            this.lblSelectedUser.AutoSize = true;
-            this.lblSelectedUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblSelectedUser.Location = new System.Drawing.Point(12, 61);
-            this.lblSelectedUser.Name = "lblSelectedUser";
-            this.lblSelectedUser.Size = new System.Drawing.Size(0, 15);
-            this.lblSelectedUser.TabIndex = 9;
+            this.lblProfile.AutoSize = true;
+            this.lblProfile.Location = new System.Drawing.Point(17, 12);
+            this.lblProfile.Name = "lblProfile";
+            this.lblProfile.Size = new System.Drawing.Size(36, 13);
+            this.lblProfile.TabIndex = 3;
+            this.lblProfile.Text = "Profile";
+            // 
+            // listBoxProfiles
+            // 
+            this.listBoxProfiles.FormattingEnabled = true;
+            this.listBoxProfiles.Location = new System.Drawing.Point(13, 29);
+            this.listBoxProfiles.Name = "listBoxProfiles";
+            this.listBoxProfiles.Size = new System.Drawing.Size(120, 108);
+            this.listBoxProfiles.TabIndex = 9;
             // 
             // Form1
             // 
@@ -299,9 +290,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblMessage;
         private System.Windows.Forms.TextBox txtMessage;
-        private System.Windows.Forms.Label lblId;
-        private System.Windows.Forms.TextBox txtId;
-        private System.Windows.Forms.Label lblSelectedUser;
+        private System.Windows.Forms.Label lblProfile;
+        private System.Windows.Forms.ListBox listBoxProfiles;
     }
 }
 

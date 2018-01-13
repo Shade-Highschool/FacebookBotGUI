@@ -22,6 +22,7 @@ namespace FacebookBotGUI
         }
         private void FillListBox()
         {
+            listBoxUsers.Items.Clear();
             Dictionary<string, string> dict = fbClient.GetOnlineUsers();
 
             foreach (var item in dict)
@@ -57,14 +58,21 @@ namespace FacebookBotGUI
 
         private void listBoxUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
-           KeyValuePair<string,string> pair = (KeyValuePair<string,string>)listBoxUsers.SelectedItem;
-            txtId.Text = pair.Key;
-            lblSelectedUser.Text = pair.Value;
+            listBoxProfiles.Items.Clear();
+            foreach (var item in listBoxUsers.SelectedItems)
+            {
+                listBoxProfiles.Items.Add(item);
+            }
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            fbClient.SendMessage(txtId.Text, txtMessage.Text);
+            foreach (KeyValuePair<string, string> item in listBoxProfiles.Items)
+            {
+                fbClient.SendMessage(item.Key, txtMessage.Text);
+            }
+            listBoxProfiles.Items.Clear();
+            lblConnection.Text = "Message sended";
         }
     }
 }
