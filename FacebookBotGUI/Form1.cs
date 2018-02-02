@@ -31,16 +31,15 @@ namespace FacebookBotGUI
             }
         }
 
-
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text;
             string password = txtPassword.Text;
-
-            if (fbClient.LogIn(email, password))
+            lblActiveStatus.Text = "Connecting..";
+            if (await fbClient.LogIn(email, password))
             {
                 FillListBox();
-                lblConnection.Text = "Connected successfully";
+                lblActiveStatus.Text = "Connected successfully";
                 lblUserName.Text = fbClient.ProfileName;
                 lblUserId.Text = fbClient.ProfileId;
                 lblUserId.Visible = true;
@@ -48,7 +47,7 @@ namespace FacebookBotGUI
 
             }
             else
-                lblConnection.Text = "Connection unsuccessfull";
+                lblActiveStatus.Text = "Connection unsuccessfull";
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -67,12 +66,27 @@ namespace FacebookBotGUI
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, string> item in listBoxProfiles.Items)
+            if (!chckBoxCustomID.Checked)
             {
-                fbClient.SendMessage(item.Key, txtMessage.Text);
+                foreach (KeyValuePair<string, string> item in listBoxProfiles.Items)
+                {
+                    for (int i = 0; i < numericUpDownMessageCount.Value; i++)
+                    {
+                        lblActiveStatus.Text = "Sending.." + i.ToString();
+                        fbClient.SendMessage(item.Key, txtMessage.Text);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < numericUpDownMessageCount.Value; i++)
+                {
+                    lblActiveStatus.Text = "Sending.." + i.ToString();
+                    fbClient.SendMessage(txtBoxCustomID.Text, txtMessage.Text);
+                }
             }
             listBoxProfiles.Items.Clear();
-            lblConnection.Text = "Message sended";
+            lblActiveStatus.Text = "Message sended";
         }
     }
 }

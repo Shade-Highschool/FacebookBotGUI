@@ -39,7 +39,7 @@ namespace FacebookBotGUI
             return dict;
 
         }
-        public bool LogIn(string username, string password)
+        public async Task<bool> LogIn(string username, string password)
         {
             cookieContainer = new CookieContainer();
             Uri target = new Uri("https://facebook.com");
@@ -50,7 +50,7 @@ namespace FacebookBotGUI
 
             string postData =($"lsd=AVrSlkGE&email={username}&pass={password}&timezone=-60&lgndim=eyJ3IjoxNjAwLCJoIjo5MDAsImF3IjoxNjAwLCJhaCI6ODY3LCJjIjoyNH0%3D&lgnrnd=003143_g2fL&lgnjs=1514968306&ab_test_data=AAAAAA%2FAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%2F%2FAAAAAACAAA&locale=cs_CZ&login_source=login_bluebar&prefill_contact_point=hacker-shade%40seznam.cz&prefill_source=last_login&prefill_type=contact_point&skstamp=eyJyb3VuZHMiOjUsInNlZWQiOiI2NmFjZDE4MDUxNTk5YWMwZjMxN2ExMTMxNjcxMzJmNiIsInNlZWQyIjoiNTEzZDI3NTg3MDUyODRkMjAwOGZjNjc5N2YzYTkzMTAiLCJoYXNoIjoiNWJlNzgyMzJiNWZiMjE0OTBhYWU2OGI1ZGNiNDhmNTAiLCJoYXNoMiI6IjNmN2YyZTUyYjJjNTkxMWYxMDQ0YzE3MTFhM2ZhYTM0IiwidGltZV90YWtlbiI6NjU1OSwic3VyZmFjZSI6ImxvZ2luIn0%3D");
 
-            WebResponse response = SendPostRequest("https://www.facebook.com/login.php?login_attempt=1", postData);
+            WebResponse response = await SendPostRequest("https://www.facebook.com/login.php?login_attempt=1", postData);
 
             if (!response.ResponseUri.OriginalString.Contains("https://www.facebook.com/login.php"))
             {
@@ -65,14 +65,14 @@ namespace FacebookBotGUI
                 return false;
             }
         }
-        public void SendMessage(string userId, string msg)
+        public async void SendMessage(string userId, string msg)
         {
             string postData;
             if(userId == ProfileId)
                 postData = ($"fb_dtsg={fb_dtsg}&body={msg}&send=Poslat&tids=cid.c.{ProfileId}&wwwupp=C3&ids%5B{userId}%5D={userId}&referrer=&ctype=&cver=legacy&csid=3cbdaf17-b8f1-233d-8f59-66fdfa969dc9");
             else
                 postData = ($"fb_dtsg={fb_dtsg}&body={msg}&send=Poslat&tids=cid.c.{ProfileId}:{userId}&wwwupp=C3&ids%5B{userId}%5D={userId}&referrer=&ctype=&cver=legacy&csid=3cbdaf17-b8f1-233d-8f59-66fdfa969dc9");
-            WebResponse response = SendPostRequest("https://m.facebook.com/messages/send/?icm=1&refid=12", postData);
+            WebResponse response = await SendPostRequest("https://m.facebook.com/messages/send/?icm=1&refid=12", postData);
             response.Close();
         }
 
@@ -85,7 +85,7 @@ namespace FacebookBotGUI
             fb_dtsg = Regex.Match(html, "name=\"fb_dtsg\" value=\"(.*?)\"").Groups[1].Value;
 
         }
-        private WebResponse SendPostRequest(string url, string postData)
+        private async Task<WebResponse> SendPostRequest(string url, string postData)
         {
             byte[] data = Encoding.UTF8.GetBytes(postData);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -102,8 +102,7 @@ namespace FacebookBotGUI
             {
                 stream.Write(data, 0, data.Length);
             } //Pošle request
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            return response;
+            return await request.GetResponseAsync();
         }
         private string GetHtmlSourceCode(string url)
         {
