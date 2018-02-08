@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,15 +21,25 @@ namespace FacebookBotGUI
             fbClient = new FacebookClient();
             this.AcceptButton = btnLogin;
         }
-        private void FillListBox()
+        private async void FillListBox()
         {
             listBoxUsers.Items.Clear();
-            Dictionary<string, string> dict = fbClient.GetOnlineUsers();
+            Dictionary<string, string> dict = await fbClient.GetOnlineUsers();
 
+            await Task.Run(() =>
+            {
+                 foreach (var item in dict)
+                 {
+                     Invoke((MethodInvoker)delegate { listBoxUsers.Items.Add(item); });
+                 }
+            });
+
+           /* listBoxUsers.BeginUpdate();
             foreach (var item in dict)
             {
                 listBoxUsers.Items.Add(item);
-            }
+            }*/
+            
         }
 
         private async void button1_Click(object sender, EventArgs e)
