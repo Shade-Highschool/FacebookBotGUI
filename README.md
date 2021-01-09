@@ -1,2 +1,2 @@
 # FacebookBotGUI
-Facebook send bot
+Facebook send bot - OUTDATED
